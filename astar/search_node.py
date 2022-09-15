@@ -1,17 +1,20 @@
 from state import *
 
 class Search_node:
-    def __init__(self, state, parent, path_cost, est_total_cost) -> None:
-        self.parent = parent # parent node
-        self.path_cost = path_cost # cost from the starting node to this node
-        self.est_total_cost = est_total_cost # estimated total costs: f(n)=g(n)+h(n)
-        self.state = state # coordinates of the given position (x, y)
+    def __init__(self, state = None, parent = None):
+        self.g = 0 #cost of getting to this node
+        self.h = 0 #estimated cost to goal
+        self.state = state # coordinates given 2D position (x,y) 
+        self.parent = parent # best parent node
+        self.kids = [] # node kids
     
+    # checking if state is the same
     def __eq__(self, other):
-        return self.est_total_cost == other.est_total_cost
+        return self.state == other.state
     
     def __gt__(self, other):
-        return self.est_total_cost > other.est_total_cost
+        return (self.g + self.h) > (other.g + other.h)
 
-    def __lt__(self, other):
-        return self.est_total_cost < other.est_total_cost
+    # estimated total cost: f(n) = g(n) + h(n)
+    def get_f(self):
+        return self.g + self.h
