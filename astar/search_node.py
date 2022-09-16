@@ -5,7 +5,8 @@ class Search_node:
         self.g = 0 #cost of getting to this node
         self.h = 0 #estimated cost to goal
         self.state = state # coordinates given 2D position (x,y) 
-        self.parent = parent # best parent node
+        self.status = True # open = True / closed = False
+        self.parent = parent # pointer to best parent node
         self.kids = [] # node kids
     
     # checking if state is the same
