@@ -7,7 +7,7 @@ class Search_node:
         self.state = state # coordinates given 2D position (x,y) 
         self.status = True # open = True / closed = False
         self.parent = parent # pointer to best parent node
-        self.kids = [] # node kids
+        self.children = [] # node children
     
     # checking if state is the same
     def __eq__(self, other):
