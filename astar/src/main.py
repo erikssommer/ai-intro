@@ -1,13 +1,12 @@
 import map
 import astar
 import sys
-
-from search_node import Search_node
+from node import Node
 
 
 def find_path(node, map_obj):
     current_node = node
-    goalNode = Search_node(map_obj.get_goal_pos())
+    goalNode = Node(map_obj.get_goal_pos())
 
     while current_node.parent is not None:
         if current_node.state != goalNode.state:

@@ -1,12 +1,12 @@
-from search_node import Search_node
+from node import Node
 
 
 def best_first_search(map_obj):
     open = []
     closed = []
 
-    root_node = Search_node(map_obj.get_start_pos())
-    goal_node = Search_node(map_obj.get_goal_pos())
+    root_node = Node(map_obj.get_start_pos())
+    goal_node = Node(map_obj.get_goal_pos())
 
     root_node.g = 0
     root_node.h = manhattan_distance(root_node, goal_node)
@@ -58,7 +58,7 @@ def attach_and_eval(child, parent, map_obj):
     child.parent = parent
     child.g = parent.g + arc_cost(child, map_obj)
     child.h = manhattan_distance(
-        child, Search_node(map_obj.get_end_goal_pos()))
+        child, Node(map_obj.get_end_goal_pos()))
     child.f = child.g + child.h
 
 

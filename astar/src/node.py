@@ -1,8 +1,8 @@
-class Search_node:
+class Node:
     def __init__(self, state=None, parent=None):
         self.g = 0  # cost of getting to this node
         self.h = 0  # estimated cost to goal
-        self.f = 0
+        self.f = 0  # sum of g and h
         self.state = state  # coordinates given 2D position (x,y)
         self.status = True  # open = True / closed = False
         self.parent = parent  # pointer to best parent node
@@ -34,7 +34,7 @@ class Search_node:
         for state in matrix:
             value = map_obj.get_cell_value(state)
             if value >= 0:
-                node = Search_node(state)
+                node = Node(state)
                 successors.append(node)
 
         return successors
