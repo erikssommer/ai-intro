@@ -1,5 +1,6 @@
 import Map
 import astar
+import sys
 
 def find_path(node, map_obj):
     current_node = node
@@ -22,4 +23,17 @@ def main(task_number):
     except AttributeError:
         print("An error accoured while finding path")
 
-main(1)
+try:
+    input = sys.argv[1]
+
+    try:
+        input = int(input)
+    except:
+        print("You have to pass a variable containing task number, try again!")
+
+    if input <= 0 or input > 3:
+        print("Task number must be between 1 and 3")
+    else:
+        main(input)
+except Exception as e:
+    print(e)
