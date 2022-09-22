@@ -2,7 +2,6 @@
 # maximum score that
 # maximizing player can get
 
-from audioop import minmax
 import math
 
 def maxmin(curDepth, nodeIndex, maxTurn, scores, targetDepth):
