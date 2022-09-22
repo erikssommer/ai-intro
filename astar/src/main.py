@@ -1,4 +1,4 @@
-import Map
+import map
 import astar
 import sys
 
@@ -19,7 +19,7 @@ def find_path(node, map_obj):
 
 
 def main(task_number):
-    map_obj = Map.Map_Obj(task=task_number)
+    map_obj = map.Map_Obj(task=task_number)
     run = astar.best_first_search(map_obj)
 
     find_path(run, map_obj)
