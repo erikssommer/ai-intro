@@ -1,7 +1,14 @@
+from random import randrange
+
 class Node:
     def __init__(self,value):
+        self.root = None
         self.value = value
         self.children = []
+    
+
+def new_node(value):
+    return Node(value)
 
 class AlphaBeta:
     def __init__(self, game_tree) -> None:
@@ -23,11 +30,11 @@ class AlphaBeta:
                 best_val = value
                 best_state = state
         print("AlphaBeta: Utility Value of Root Node: = " + str(best_val))
-        print("AlphaBeta: Best State is: " + best_state.Name)
+        print("AlphaBeta: Best State is: " + str(best_state.value))
         return best_state
 
     def max_value(self, node, alpha, beta):
-        print("AlphaBeta --> Max: Visited node :: " + node.Name)
+        print("AlphaBeta --> Max: Visited node :: " + str(node.value))
         if self.isTerminal(node):
             return self.getUtility(node)
         
@@ -45,7 +52,7 @@ class AlphaBeta:
 
 
     def min_value(self, node, alpha, beta):
-        print("AlphaBeta --> Min: Visited node :: " + node.Name)
+        print("AlphaBeta --> Min: Visited node :: " + str(node.value))
         if self.isTerminal(node):
             return self.getUtility(node)
         
@@ -80,5 +87,21 @@ class AlphaBeta:
         return node.value
 
 def main():
-    game_tree = None
+
+    game_tree = new_node(10)
+    game_tree.root = game_tree
+    (game_tree.children).append(new_node(2))
+    (game_tree.children).append(new_node(34))
+    (game_tree.children).append(new_node(56))
+    (game_tree.children).append(new_node(100))
+    (game_tree.children[0].children).append(new_node(77))
+    (game_tree.children[0].children).append(new_node(88))
+    (game_tree.children[2].children).append(new_node(1))
+    (game_tree.children[3].children).append(new_node(7))
+    (game_tree.children[3].children).append(new_node(8))
+    (game_tree.children[3].children).append(new_node(9))
+
     search = AlphaBeta(game_tree)
+    search.alpha_beta_search(game_tree.root)
+
+main()
