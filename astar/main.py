@@ -4,6 +4,7 @@ import sys
 
 from search_node import Search_node
 
+
 def find_path(node, map_obj):
     current_node = node
     goalNode = Search_node(map_obj.get_goal_pos())
@@ -13,7 +14,7 @@ def find_path(node, map_obj):
             map_obj.set_cell_value(current_node.state, 5)
 
         current_node = current_node.parent
-    
+
     map_obj.show_map()
 
 
@@ -23,7 +24,7 @@ def main(task_number):
 
     find_path(run, map_obj)
 
-    
+
 try:
     input = sys.argv[1]
 
