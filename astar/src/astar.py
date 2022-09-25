@@ -1,7 +1,7 @@
 from map import Map_Obj
 from node import Node
 
-
+# All algorithms are implemented based on the pseudocode given in "Essentials of the A* Algorithm" - handout
 def best_first_search(map_obj: Map_Obj):
     open: list[Node] = []
     closed: list[Node] = []
@@ -33,13 +33,14 @@ def best_first_search(map_obj: Map_Obj):
             node = uniqueness_check(successor, open, closed)
             current_node.children.append(successor)
             if node not in open and node not in closed:
-                attach_and_eval(node, current_node, map_obj)
+                attach_and_eval(node, current_node, goal_node, map_obj)
                 open.append(node)
                 open.sort(key=lambda node: node.f, reverse=True)
             elif (current_node.g + arc_cost(node, map_obj)) < node.g:
-                attach_and_eval(node, current_node, map_obj)
+                attach_and_eval(node, current_node, goal_node, map_obj)
                 if node in closed:
                     propagate_path_improvements(node, map_obj)
+
 
 # Returns node if previously created, and successor if not
 def uniqueness_check(successor: Node, open: list[Node], closed: list[Node]) -> Node:
@@ -54,19 +55,19 @@ def uniqueness_check(successor: Node, open: list[Node], closed: list[Node]) -> N
     return successor
 
 # Attaches a child node to a node that is considered its best parent so far
-def attach_and_eval(child: Node, parent: Node, map_obj: Map_Obj) -> None:
+def attach_and_eval(child: Node, parent: Node, goal_node: Node, map_obj: Map_Obj) -> None:
     child.parent = parent
     child.g = parent.g + arc_cost(child, map_obj)
-    child.h = manhattan_distance(
-        child, Node(map_obj.get_end_goal_pos()))
+    child.h = manhattan_distance(child, goal_node)
     child.f = child.g + child.h
 
 
+# Heuristic function
 # Returns the Manhattan distance between the two nodes
 def manhattan_distance(curr_node: Node, goal_node: Node):
     return abs(curr_node.state[0] - goal_node.state[0]) + abs(curr_node.state[1] - goal_node.state[1])
 
-
+# Calculates the cost of taking the step
 def arc_cost(child: Node, map_obj: Map_Obj) -> int:
     return map_obj.get_cell_value(child.state)
 
