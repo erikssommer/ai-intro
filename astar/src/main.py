@@ -32,8 +32,8 @@ try:
     except:
         print("You have to pass a variable containing task number, try again!")
 
-    if input <= 0 or input > 4:
-        print("Task number must be between 1 and 4")
+    if input <= 0 or input > 5:
+        print("Task number must be between 1 and 5")
     else:
         try:
             main(input)
