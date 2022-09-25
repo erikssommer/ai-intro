@@ -1,10 +1,12 @@
+from map import Map_Obj
+
+
 class Node:
-    def __init__(self, state=None, parent=None):
-        self.g = 0  # cost of getting to this node
-        self.h = 0  # estimated cost to goal
-        self.f = 0  # sum of g and h
+    def __init__(self, state=None, g=0, h=0, parent=None):
         self.state = state  # coordinates given 2D position (x,y)
-        self.status = True  # open = True / closed = False
+        self.g = g  # cost of getting to this node
+        self.h = h  # estimated cost to goal
+        self.f = g + h  # sum of g and h
         self.parent = parent  # pointer to best parent node
         self.children = []  # node children
 
@@ -12,17 +14,16 @@ class Node:
     def __eq__(self, other):
         return self.state == other.state
 
-    def __gt__(self, other):
-        return (self.g + self.h) > (other.g + other.h)
-
     # estimated total cost: f(n) = g(n) + h(n)
     def get_f(self):
         return self.g + self.h
 
+    # Calculating f based on g and h
     def calculate_f(self):
         self.f = self.g + self.h
 
-    def generate_all_successors(self, map_obj):
+    # Generating all successors for given node
+    def generate_all_successors(self, map_obj: Map_Obj) -> list:
         up = [self.state[0] - 1, self.state[1]]
         down = [self.state[0] + 1, self.state[1]]
         left = [self.state[0], self.state[1] - 1]
