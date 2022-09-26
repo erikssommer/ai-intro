@@ -2,7 +2,7 @@ from map import Map_Obj
 
 
 class Node:
-    def __init__(self, state=None, g=0, h=0, parent=None):
+    def __init__(self, state=None, g=0, h=0, parent=None) -> None:
         self.state = state  # coordinates given 2D position (x,y)
         self.g = g  # cost of getting to this node
         self.h = h  # estimated cost to goal
@@ -11,15 +11,11 @@ class Node:
         self.children = []  # node children
 
     # checking if state is the same
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.state == other.state
 
-    # estimated total cost: f(n) = g(n) + h(n)
-    def get_f(self):
-        return self.g + self.h
-
     # Calculating f based on g and h
-    def calculate_f(self):
+    def calculate_f(self) -> int:
         self.f = self.g + self.h
 
     # Generating all successors for given node
