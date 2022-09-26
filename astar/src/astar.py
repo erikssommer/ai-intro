@@ -1,5 +1,6 @@
 from map import Map_Obj
 from node import Node
+from solution import Solution
 
 # All algorithms are implemented based on the pseudocode given in "Essentials of the A* Algorithm" - handout
 
@@ -23,18 +24,20 @@ def best_first_search(map_obj: Map_Obj, task: int):
 
     # Agenda loop - while no solution is found
     while open:
-        # Moves the goal one step every fourth call if task == 5
-        goal_node.state = map_obj.tick() if task == 5 else goal_node.state
+        # Moves the goal one step every fourth call on task 5: moving goal
+        if task == 5:
+            goal_node.state = map_obj.tick()
+
         # Returning a fail
         if len(open) == 0:
-            return "fail", None
+            return Solution.FAIL, None
 
         current_node: Node = open.pop()
 
         closed.append(current_node)
 
         if current_node == goal_node:
-            return "success", current_node  # Solution
+            return Solution.SUCCESS, current_node  # Solution
 
         successors = current_node.generate_all_successors(map_obj)
 

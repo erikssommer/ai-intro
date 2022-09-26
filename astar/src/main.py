@@ -3,6 +3,7 @@ import astar
 import sys
 from node import Node
 from map import Map_Obj
+from solution import Solution
 
 
 def find_path(node: Node, map_obj: Map_Obj) -> Node:
@@ -22,7 +23,7 @@ def main(task_number: int) -> None:
     map_obj = map.Map_Obj(task=task_number)
     status, node = astar.best_first_search(map_obj, task_number)
 
-    if status == "success":
+    if status == Solution.SUCCESS:
         find_path(node, map_obj)
     else:
         print("Failed to find path")
