@@ -2,14 +2,15 @@ import map
 import astar
 import sys
 from node import Node
+from map import Map_Obj
 
 
-def find_path(node, map_obj):
+def find_path(node: Node, map_obj: Map_Obj) -> Node:
     current_node = node
-    goalNode = Node(map_obj.get_goal_pos())
+    goal_node = Node(map_obj.get_goal_pos())
 
     while current_node.parent is not None:
-        if current_node.state != goalNode.state:
+        if current_node.state != goal_node.state:
             map_obj.set_cell_value(current_node.state, 5)
 
         current_node = current_node.parent
@@ -17,12 +18,14 @@ def find_path(node, map_obj):
     map_obj.show_map()
 
 
-def main(task_number):
+def main(task_number: int) -> None:
     map_obj = map.Map_Obj(task=task_number)
-    run = astar.best_first_search(map_obj)
+    status, node = astar.best_first_search(map_obj, task_number)
 
-    find_path(run, map_obj)
-
+    if status == "success":
+        find_path(node, map_obj)
+    else:
+        print("Failed to find path")
 
 try:
     input = sys.argv[1]
