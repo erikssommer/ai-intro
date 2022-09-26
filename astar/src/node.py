@@ -5,6 +5,7 @@ class Node:
     """
     Class to encapsulate search states within nodes in the search tree/graph.
     """
+
     def __init__(self, state=None, g=0, h=0, parent=None) -> None:
         self.state = state  # coordinates given 2D position (x,y)
         self.g = g  # cost of getting to this node

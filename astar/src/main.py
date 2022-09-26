@@ -5,6 +5,7 @@ from node import Node
 from map import Map_Obj
 from solution import Solution
 
+
 def find_path(node: Node, map_obj: Map_Obj) -> Node:
     """
     Drawing map by backpropagating from resultnode
@@ -21,6 +22,7 @@ def find_path(node: Node, map_obj: Map_Obj) -> Node:
         current_node = current_node.parent
     # Showing map
     map_obj.show_map()
+
 
 def main(task_number: int) -> None:
     """

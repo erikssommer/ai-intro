@@ -31,7 +31,7 @@ def best_first_search(map_obj: Map_Obj, task: int):
             goal_node.state = map_obj.tick()
 
         if len(open) == 0:
-            return Solution.FAIL, None # Fail
+            return Solution.FAIL, None  # Fail
 
         current_node: Node = open.pop()
 
@@ -42,7 +42,7 @@ def best_first_search(map_obj: Map_Obj, task: int):
 
         # Generating all successors from current node
         successors = current_node.generate_all_successors(map_obj)
-        
+
         for successor in successors:
             # Checked for uniqueness
             node = uniqueness_check(successor, open, closed)
