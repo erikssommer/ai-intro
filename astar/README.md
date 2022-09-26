@@ -11,6 +11,7 @@ cd src
 python3 main.py <tasknr>
 ```
 
+# Part 1 – Grid with obstacles
 ## Task 1 - find the shortest path from Rundhallen (your location) to Strossa
 ### Run:
 ```bash
@@ -27,6 +28,7 @@ python3 main.py 2
 ### Output:
 ![task2](./assets/images/task2.jpg)
 
+# Part 2 – Grids with different costs
 ## Task 3 - find the path from Lyche to Klubben with the least cost
 ### Run:
 ```bash
@@ -42,4 +44,13 @@ python3 main.py 4
 ```
 ### Output:
 ![task3](./assets/images/task4.jpg)
+
+# Part 3 – Moving Goal (Optional)
+## Task 5 - find your friend who will be starting out at Klubben and moving towards Selskapssiden
+### Run:
+```bash
+python3 main.py 5
+```
+### Output:
+![task3](./assets/images/task5.jpg)
 
