@@ -353,4 +353,3 @@ class Map_Obj():
                                y * scale + j] = colors[themap[y][x]]
         # Show image
         image.show()
-        

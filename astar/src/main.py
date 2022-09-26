@@ -27,6 +27,7 @@ def main(task_number: int) -> None:
     else:
         print("Failed to find path")
 
+
 try:
     input = sys.argv[1]
 

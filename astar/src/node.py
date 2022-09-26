@@ -10,16 +10,22 @@ class Node:
         self.parent = parent  # pointer to best parent node
         self.children = []  # node children
 
-    # checking if state is the same
     def __eq__(self, other) -> bool:
+        """
+        checking if state is the same
+        """
         return self.state == other.state
 
-    # Calculating f based on g and h
     def calculate_f(self) -> int:
+        """
+        Calculating f based on g and h
+        """
         self.f = self.g + self.h
 
-    # Generating all successors for given node
     def generate_all_successors(self, map_obj: Map_Obj) -> list:
+        """
+        Generating all successors for given node
+        """
         up = [self.state[0] - 1, self.state[1]]
         down = [self.state[0] + 1, self.state[1]]
         left = [self.state[0], self.state[1] - 1]

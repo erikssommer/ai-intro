@@ -3,6 +3,7 @@ from node import Node
 
 # All algorithms are implemented based on the pseudocode given in "Essentials of the A* Algorithm" - handout
 
+
 def best_first_search(map_obj: Map_Obj, task: int):
     """
     Using task parameter for choosing heuristic function based on if goal is moving or not
@@ -14,7 +15,8 @@ def best_first_search(map_obj: Map_Obj, task: int):
     goal_node = Node(map_obj.get_goal_pos())
 
     start_node.g = 0
-    start_node.h = heuristic_function(start_node, goal_node) if task != 5 else heuristic_function_moving(start_node, goal_node)
+    start_node.h = heuristic_function(
+        start_node, goal_node) if task != 5 else heuristic_function_moving(start_node, goal_node)
     start_node.calculate_f()
 
     open.append(start_node)
@@ -70,7 +72,8 @@ def attach_and_eval(child: Node, parent: Node, goal_node: Node, map_obj: Map_Obj
     """
     child.parent = parent
     child.g = parent.g + arc_cost(child, map_obj)
-    child.h = heuristic_function(child, goal_node) if task != 5 else heuristic_function_moving(child, goal_node)
+    child.h = heuristic_function(
+        child, goal_node) if task != 5 else heuristic_function_moving(child, goal_node)
     child.f = child.g + child.h
 
 
