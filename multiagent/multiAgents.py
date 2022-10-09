@@ -150,7 +150,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
             return (self.evaluationFunction(gameState), None)
 
         v = -(float("inf"))
-
+        move = None
+        
         for action in actions:
             v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth)
             if v2 > v:
@@ -165,6 +166,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
             return (self.evaluationFunction(gameState), None)
         
         v = float("inf")
+        move = None
 
         for action in actions:
             if agent == gameState.getNumAgents() - 1:
