@@ -159,7 +159,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         return v, move
 
 
-    def min_value(self, gameState, agent, depth):
+    def min_value(self, gameState: GameState, agent, depth):
         actions = gameState.getLegalActions(agent)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
@@ -178,7 +178,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         return v, move
             
 
-    def is_terminal(self, gameState: GameState, actions, depth):
+    def is_terminal(self, gameState: GameState, actions, depth) -> bool:
         if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
             return True
         else:
