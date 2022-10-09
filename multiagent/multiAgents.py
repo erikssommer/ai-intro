@@ -13,7 +13,7 @@
 
 
 from util import manhattanDistance
-from game import Directions, GameStateData
+from pacman import GameState
 import random, util
 
 from game import Agent
@@ -112,7 +112,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
     Your minimax agent (question 2)
     """
 
-    def getAction(self, gameState: GameStateData):
+    def getAction(self, gameState: GameState):
         """
         Returns the minimax action from the current gameState using self.depth
         and self.evaluationFunction.
@@ -136,7 +136,55 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.minimax_search(gameState, 0)
+
+    
+    def minimax_search(self, gameState: GameState, depth):
+        value, move = self.max_value(gameState, depth)
+        return move
+
+    
+    def max_value(self, gameState: GameState, depth):
+        actions = gameState.getLegalActions(0)
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+
+        v = -(float("inf"))
+
+        for action in actions:
+            v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth)
+            if v2 > v:
+                v, move = v2, action
+        
+        return v, move
+
+
+    def min_value(self, gameState, agent, depth):
+        actions = gameState.getLegalActions(agent)
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+        
+        v = float("inf")
+
+        for action in actions:
+            if agent == gameState.getNumAgents() - 1:
+                v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1)
+            else:
+                v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth)
+            
+            if v2 < v:
+                v, move = v2, action
+            
+        return v, move
+            
+
+    def is_terminal(self, gameState: GameState, actions, depth):
+        if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
+            return True
+        else:
+            return False
+
+
 
 # TODO: implement this
 class AlphaBetaAgent(MultiAgentSearchAgent):
