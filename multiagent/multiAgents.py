@@ -136,7 +136,9 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        return self.minimax_search(gameState, 0)
+        # Pacman is always agent 0
+        pacman = 0
+        return self.minimax_search(gameState, pacman)
 
     # minmax search based on the pseudocode from the 
     def minimax_search(self, gameState: GameState, depth):
@@ -208,9 +210,11 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        # Pacman is always agent 0
+        pacman = 0
+        return self.alpha_beta_search(gameState, pacman)
 
-    def alpha_beta_search(self, gameState, depth):
+    def alpha_beta_search(self, gameState: GameState, depth):
         """
         An algorithm for calculating the optimal move using minimax
         """
@@ -223,6 +227,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         return move
 
     def max_value(self, gameState: GameState, depth, alpha, beta):
+        # retrieving the legal actions
         actions = gameState.getLegalActions(0)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
@@ -233,13 +238,12 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         move = None
 
         for action in actions:
-            v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth, min, max)
+            v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth, alpha, beta)
             if v2 > v:
                 v, move = v2, action
                 alpha = max(alpha, v)
-            if v >= beta:
+            if v > beta:
                 return v, move
-                
         return v, move
     
     def min_value(self, gameState: GameState, agent, depth, alpha, beta):
@@ -247,6 +251,21 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         actions = gameState.getLegalActions(agent)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
+
+        v = float("inf")
+        move = None
+
+        for action in actions:
+            if agent == gameState.getNumAgents() - 1:
+                v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1, alpha, beta)
+            else:
+                v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth, alpha, beta)
+            if v2 < v:
+                v, move = v2, action
+                beta = min(beta, v)
+            if v < alpha:
+                return v, move
+        return v, move
 
     # check if the game is over or if the depth is reached
     def is_terminal(self, gameState: GameState, actions, depth) -> bool:
