@@ -173,6 +173,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         
         # initialize the value to be the worst possible value
         v = float("inf")
+        # bounding the move variable
         move = None
         # go through the whole game tree, all the way to the leaves
         # determine the backed-up value of a state and the move to get there
@@ -187,7 +188,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
             
         return v, move
             
-
+    # check if the game is over or if the depth is reached
     def is_terminal(self, gameState: GameState, actions, depth) -> bool:
         if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
             return True
@@ -208,6 +209,48 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         """
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
+
+    def alpha_beta_search(self, gameState, depth):
+        """
+        An algorithm for calculating the optimal move using minimax
+        """
+        # min
+        alpha = -(float("inf"))
+        # max
+        beta = float("inf")
+        depth = 0
+        value, move = self.max_value(gameState, depth, alpha, beta)
+        return move
+
+    def max_value(self, gameState: GameState, depth, min, max):
+        actions = gameState.getLegalActions(0)
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+        
+        # initialize the value to be the worst possible value
+        v = -(float("inf"))
+        # bounding the move variable
+        move = None
+
+        for action in actions:
+            v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth, min, max)
+            if v2 > v:
+                v, move = v2, action
+                alpha = max(alpha, v)
+            if v >= beta:
+                return v, move
+        return v, move
+    
+    def min_value(self, gameState: GameState, agent, depth, alpha, beta):
+        pass
+    
+    # check if the game is over or if the depth is reached
+    def is_terminal(self, gameState: GameState, actions, depth) -> bool:
+        if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
+            return True
+        else:
+            return False
+
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
