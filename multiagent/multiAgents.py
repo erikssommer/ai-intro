@@ -147,6 +147,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         for action in actions:
             v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth)
             if v2 > v:
+                # update the value and the move
                 v, move = v2, action
         # return the value and the move
         return v, move
@@ -236,6 +237,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth, alpha, beta)
             if v2 > v:
                 v, move = v2, action
+                # prune the rest of the tree
                 alpha = max(alpha, v)
             if v > beta:
                 return v, move
@@ -261,7 +263,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth, alpha, beta)
             if v2 < v:
                 v, move = v2, action
-                # update the beta value
+                # prune the rest of the tree
                 beta = min(beta, v)
             if v < alpha:
                 return v, move
