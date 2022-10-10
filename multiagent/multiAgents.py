@@ -106,7 +106,14 @@ class MultiAgentSearchAgent(Agent):
         self.evaluationFunction = util.lookup(evalFn, globals())
         self.depth = int(depth)
 
-# TODO: implement this
+    # method used in both minimax and alpha-beta search
+    def is_terminal(self, gameState: GameState, actions: list, depth: int) -> bool:
+        # check if the game is over or if the depth is reached
+        if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
+            return True
+        else:
+            return False
+
 class MinimaxAgent(MultiAgentSearchAgent):
     """
     Your minimax agent (question 2)
@@ -138,7 +145,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         return self.minimax_search(gameState)
 
-    # minmax search based on the pseudocode from the 
+    # minmax search based on the pseudocode provided in Figure 6.3 (p. 196) of the textbook (AIMA 4th Ed.)
     def minimax_search(self, gameState: GameState):
         """
         An algorithm for calculating the optimal move using minimax
@@ -149,9 +156,8 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
     
     def max_value(self, gameState: GameState, depth: int):
-        # Pacman is always agent 0
-        pacman = 0
-        actions = gameState.getLegalActions(pacman)
+        # get all the possible actions for pacman
+        actions = gameState.getLegalActions(self.index)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
 
@@ -162,7 +168,7 @@ class MinimaxAgent(MultiAgentSearchAgent):
 
         # for each action, get the value of the successor state
         for action in actions:
-            v2, a2 = self.min_value(gameState.generateSuccessor(pacman, action), 1, depth)
+            v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth)
             if v2 > v:
                 v, move = v2, action
         # return the value and the move
@@ -181,26 +187,19 @@ class MinimaxAgent(MultiAgentSearchAgent):
         # go through the whole game tree, all the way to the leaves
         # determine the backed-up value of a state and the move to get there
         for action in actions:
+            # if the agent is the last ghost, then we need to go to the next depth
             if agent == gameState.getNumAgents() - 1:
                 v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1)
             else:
+                # otherwise, we need to go to the next agent
                 v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth)
-            
+            # if the value is less than the current value, then we need to update the value and the move
             if v2 < v:
                 v, move = v2, action
             
         return v, move
-            
-    # check if the game is over or if the depth is reached
-    def is_terminal(self, gameState: GameState, actions: list, depth: int) -> bool:
-        if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
-            return True
-        else:
-            return False
 
-
-
-# TODO: implement this
+# 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
@@ -213,6 +212,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         return self.alpha_beta_search(gameState)
 
+    # alpha-beta search based on the pseudocode provided in Figure 6.7 (p. 200) of the textbook (AIMA 4th Ed.)
     def alpha_beta_search(self, gameState: GameState):
         """
         An algorithm for calculating the optimal move using minimax
@@ -224,10 +224,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         return move
 
     def max_value(self, gameState: GameState, depth: int, alpha: float, beta: float):
-        # Pacman is always agent 0
-        pacman = 0
-        # retrieving the legal actions
-        actions = gameState.getLegalActions(pacman)
+        # retrieving the legal actions for pacman
+        actions = gameState.getLegalActions(self.index)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
         
@@ -236,8 +234,9 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         # bounding the move variable
         move = None
 
+        # for each action, get the value of the successor state
         for action in actions:
-            v2, a2 = self.min_value(gameState.generateSuccessor(pacman, action), 1, depth, alpha, beta)
+            v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth, alpha, beta)
             if v2 > v:
                 v, move = v2, action
                 alpha = max(alpha, v)
@@ -257,24 +256,19 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         move = None
 
         for action in actions:
+            # if the agent is the last ghost, then we need to go to the next depth
             if agent == gameState.getNumAgents() - 1:
                 v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1, alpha, beta)
             else:
+                # otherwise, we need to go to the next agent
                 v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth, alpha, beta)
             if v2 < v:
                 v, move = v2, action
+                # update the beta value
                 beta = min(beta, v)
             if v < alpha:
                 return v, move
         return v, move
-
-    # check if the game is over or if the depth is reached
-    def is_terminal(self, gameState: GameState, actions: list, depth: int) -> bool:
-        if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
-            return True
-        else:
-            return False
-
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
