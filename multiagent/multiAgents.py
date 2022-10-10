@@ -222,7 +222,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         value, move = self.max_value(gameState, depth, alpha, beta)
         return move
 
-    def max_value(self, gameState: GameState, depth, min, max):
+    def max_value(self, gameState: GameState, depth, alpha, beta):
         actions = gameState.getLegalActions(0)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
@@ -239,11 +239,15 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 alpha = max(alpha, v)
             if v >= beta:
                 return v, move
+                
         return v, move
     
     def min_value(self, gameState: GameState, agent, depth, alpha, beta):
-        pass
-    
+        # get the legal actions for the agent/ghost
+        actions = gameState.getLegalActions(agent)
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+
     # check if the game is over or if the depth is reached
     def is_terminal(self, gameState: GameState, actions, depth) -> bool:
         if len(actions) == 0 or gameState.isWin() or gameState.isLose() or depth == self.depth:
