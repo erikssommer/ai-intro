@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -14,9 +14,11 @@
 
 from util import manhattanDistance
 from pacman import GameState
-import random, util
+import random
+import util
 
 from game import Agent
+
 
 class ReflexAgent(Agent):
     """
@@ -27,7 +29,6 @@ class ReflexAgent(Agent):
     it in any way you see fit, so long as you don't touch our method
     headers.
     """
-
 
     def getAction(self, gameState):
         """
@@ -76,6 +77,7 @@ class ReflexAgent(Agent):
         "*** YOUR CODE HERE ***"
         return successorGameState.getScore()
 
+
 def scoreEvaluationFunction(currentGameState):
     """
     This default evaluation function just returns the score of the state.
@@ -85,6 +87,7 @@ def scoreEvaluationFunction(currentGameState):
     (not reflex agents).
     """
     return currentGameState.getScore()
+
 
 class MultiAgentSearchAgent(Agent):
     """
@@ -114,10 +117,65 @@ class MultiAgentSearchAgent(Agent):
         else:
             return False
 
+
 class MinimaxAgent(MultiAgentSearchAgent):
     """
     Your minimax agent (question 2)
     """
+
+    # minmax search based on the pseudocode provided in Figure 6.3 (p. 196) of the textbook (AIMA 4th Ed.)
+    def minimax_search(self, gameState: GameState):
+        """
+        An algorithm for calculating the optimal move using minimax
+        """
+        depth = 0
+        value, move = self.max_value(gameState, depth)
+        return move
+
+    def max_value(self, gameState: GameState, depth: int):
+        # get all the possible actions for pacman
+        actions = gameState.getLegalActions(self.index)
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+
+        # initialize the value to be the worst possible value
+        v = -(float("inf"))
+        # bounding the move variable
+        move = None
+
+        # for each action, get the value of the successor state
+        for action in actions:
+            v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth)
+            if v2 > v:
+                v, move = v2, action
+        # return the value and the move
+        return v, move
+
+    def min_value(self, gameState: GameState, agent: int, depth: int):
+        actions = gameState.getLegalActions(agent)
+        # is_terminal is defined in superclass MultiAgentSearchAgent
+        if self.is_terminal(gameState, actions, depth):
+            return (self.evaluationFunction(gameState), None)
+
+        # initialize the value to be the worst possible value
+        v = float("inf")
+        # bounding the move variable
+        move = None
+        # go through the whole game tree, all the way to the leaves
+        # determine the backed-up value of a state and the move to get there
+        for action in actions:
+            # if the agent is the last ghost, then we need to go to the next depth
+            if agent == gameState.getNumAgents() - 1:
+                v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1)
+            else:
+                # otherwise, we need to go to the next agent
+                v2, a2 = self.min_value(gameState.generateSuccessor(
+                    agent, action), agent + 1, depth)
+            # if the value is less than the current value, then we need to update the value and the move
+            if v2 < v:
+                v, move = v2, action
+
+        return v, move
 
     def getAction(self, gameState: GameState):
         """
@@ -145,72 +203,11 @@ class MinimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         return self.minimax_search(gameState)
 
-    # minmax search based on the pseudocode provided in Figure 6.3 (p. 196) of the textbook (AIMA 4th Ed.)
-    def minimax_search(self, gameState: GameState):
-        """
-        An algorithm for calculating the optimal move using minimax
-        """
-        depth = 0
-        value, move = self.max_value(gameState, depth)
-        return move
 
-    
-    def max_value(self, gameState: GameState, depth: int):
-        # get all the possible actions for pacman
-        actions = gameState.getLegalActions(self.index)
-        if self.is_terminal(gameState, actions, depth):
-            return (self.evaluationFunction(gameState), None)
-
-        # initialize the value to be the worst possible value
-        v = -(float("inf"))
-        # bounding the move variable
-        move = None
-
-        # for each action, get the value of the successor state
-        for action in actions:
-            v2, a2 = self.min_value(gameState.generateSuccessor(self.index, action), 1, depth)
-            if v2 > v:
-                v, move = v2, action
-        # return the value and the move
-        return v, move
-
-
-    def min_value(self, gameState: GameState, agent: int, depth: int):
-        actions = gameState.getLegalActions(agent)
-        if self.is_terminal(gameState, actions, depth):
-            return (self.evaluationFunction(gameState), None)
-        
-        # initialize the value to be the worst possible value
-        v = float("inf")
-        # bounding the move variable
-        move = None
-        # go through the whole game tree, all the way to the leaves
-        # determine the backed-up value of a state and the move to get there
-        for action in actions:
-            # if the agent is the last ghost, then we need to go to the next depth
-            if agent == gameState.getNumAgents() - 1:
-                v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1)
-            else:
-                # otherwise, we need to go to the next agent
-                v2, a2 = self.min_value(gameState.generateSuccessor(agent, action), agent + 1, depth)
-            # if the value is less than the current value, then we need to update the value and the move
-            if v2 < v:
-                v, move = v2, action
-            
-        return v, move
-
-# 
 class AlphaBetaAgent(MultiAgentSearchAgent):
     """
     Your minimax agent with alpha-beta pruning (question 3)
     """
-
-    def getAction(self, gameState: GameState):
-        """
-        Returns the minimax action using self.depth and self.evaluationFunction
-        """
-        "*** YOUR CODE HERE ***"
-        return self.alpha_beta_search(gameState)
 
     # alpha-beta search based on the pseudocode provided in Figure 6.7 (p. 200) of the textbook (AIMA 4th Ed.)
     def alpha_beta_search(self, gameState: GameState):
@@ -218,7 +215,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         An algorithm for calculating the optimal move using minimax
         """
         alpha = -(float("inf"))  # min
-        beta = float("inf") # max
+        beta = float("inf")  # max
         depth = 0
         value, move = self.max_value(gameState, depth, alpha, beta)
         return move
@@ -228,7 +225,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
         actions = gameState.getLegalActions(self.index)
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
-        
+
         # initialize the value to be the worst possible value
         v = -(float("inf"))
         # bounding the move variable
@@ -243,7 +240,7 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
             if v > beta:
                 return v, move
         return v, move
-    
+
     def min_value(self, gameState: GameState, agent: int, depth: int, alpha: float, beta: float):
         # get the legal actions for the agent/ghost
         actions = gameState.getLegalActions(agent)
@@ -270,6 +267,14 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
                 return v, move
         return v, move
 
+    def getAction(self, gameState: GameState):
+        """
+        Returns the minimax action using self.depth and self.evaluationFunction
+        """
+        "*** YOUR CODE HERE ***"
+        return self.alpha_beta_search(gameState)
+
+
 class ExpectimaxAgent(MultiAgentSearchAgent):
     """
       Your expectimax agent (question 4)
@@ -285,6 +290,7 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
 
+
 def betterEvaluationFunction(currentGameState):
     """
     Your extreme ghost-hunting, pellet-nabbing, food-gobbling, unstoppable
@@ -294,6 +300,7 @@ def betterEvaluationFunction(currentGameState):
     """
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
+
 
 # Abbreviation
 better = betterEvaluationFunction
