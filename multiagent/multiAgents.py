@@ -138,8 +138,11 @@ class MinimaxAgent(MultiAgentSearchAgent):
         "*** YOUR CODE HERE ***"
         return self.minimax_search(gameState, 0)
 
-    
+    # minmax search based on the pseudocode from the 
     def minimax_search(self, gameState: GameState, depth):
+        """
+        An algorithm for calculating the optimal move using minimax
+        """
         value, move = self.max_value(gameState, depth)
         return move
 
@@ -149,14 +152,17 @@ class MinimaxAgent(MultiAgentSearchAgent):
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
 
+        # initialize the value to be the worst possible value
         v = -(float("inf"))
+        # bounding the move variable
         move = None
-        
+
+        # for each action, get the value of the successor state
         for action in actions:
             v2, a2 = self.min_value(gameState.generateSuccessor(0, action), 1, depth)
             if v2 > v:
                 v, move = v2, action
-        
+        # return the value and the move
         return v, move
 
 
@@ -165,9 +171,11 @@ class MinimaxAgent(MultiAgentSearchAgent):
         if self.is_terminal(gameState, actions, depth):
             return (self.evaluationFunction(gameState), None)
         
+        # initialize the value to be the worst possible value
         v = float("inf")
         move = None
-
+        # go through the whole game tree, all the way to the leaves
+        # determine the backed-up value of a state and the move to get there
         for action in actions:
             if agent == gameState.getNumAgents() - 1:
                 v2, a2 = self.max_value(gameState.generateSuccessor(agent, action), depth + 1)
