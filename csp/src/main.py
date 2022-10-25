@@ -1,4 +1,6 @@
 from csp import *
+import sys
 
-solution = create_sudoku_csp('easy.txt')
-print_sudoku_solution(solution)
+level = sys.argv[1]
+csp = create_sudoku_csp(f'{level}.txt')
+print_sudoku_solution(csp.backtracking_search())
