@@ -149,7 +149,7 @@ class CSP:
         # Call backtrack with the partial assignment 'assignment'
         return self.backtrack(assignment)
 
-    def backtrack(self, assignment):
+    def backtrack(self, assignment: dict):
         """The function 'Backtrack' from the pseudocode in the
         textbook.
 
@@ -198,7 +198,7 @@ class CSP:
         self.failure_counter += 1
         return False
         
-    def order_domain_values(self, var, assignment):
+    def order_domain_values(self, var, assignment: dict):
         """
         Returns list of legal values for 'variable' in any order i.e. no heuristics
         """
@@ -211,7 +211,7 @@ class CSP:
         return True
 
 
-    def select_unassigned_variable(self, assignment):
+    def select_unassigned_variable(self, assignment: dict):
         """The function 'Select-Unassigned-Variable' from the pseudocode
         in the textbook. Should return the name of one of the variables
         in 'assignment' that have not yet been decided, i.e. whose list
@@ -221,7 +221,7 @@ class CSP:
             if len(assignment[var]) > 1:
                 return var
 
-    def inference(self, assignment, queue: list):
+    def inference(self, assignment: dict, queue: list):
         """The function 'AC-3' from the pseudocode in the textbook.
         'assignment' is the current partial assignment, that contains
         the lists of legal values for each undecided variable. 'queue'
@@ -237,7 +237,7 @@ class CSP:
                         queue.append((k, i))
         return True
 
-    def revise(self, assignment, i, j):
+    def revise(self, assignment: dict, i, j):
         """The function 'Revise' from the pseudocode in the textbook.
         'assignment' is the current partial assignment, that contains
         the lists of legal values for each undecided variable. 'i' and
@@ -246,8 +246,13 @@ class CSP:
         between i and j, the value should be deleted from i's list of
         legal values in 'assignment'.
         """
-        # TODO: YOUR CODE HERE
-        pass
+        revised = False
+        for x in assignment[i]:
+            if not any(self.constraints[i][j](x, y) for y in assignment[j]):
+                assignment[i].remove(x)
+                revised = True
+
+        return revised
 
 
 def create_map_coloring_csp():
