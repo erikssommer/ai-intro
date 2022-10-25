@@ -18,6 +18,10 @@ class CSP:
         # the variable pair (i, j)
         self.constraints = {}
 
+        # Counters
+        self.backtrack_count = 0
+        self.failure_counter = 0
+
     def add_variable(self, name: str, domain: list):
         """Add a new variable to the CSP.
 
@@ -169,8 +173,21 @@ class CSP:
         assignments and inferences that took place in previous
         iterations of the loop.
         """
-        # TODO: YOUR CODE HERE
-        pass
+
+        # Increment the backtrack counter
+        self.backtrack_count += 1
+
+        # Check if the assignment is complete
+        if self.is_complete(assignment):
+            return assignment
+        
+
+    def is_complete(self, assignment):
+        for var in assignment:
+            if len(assignment[var]) != 1:
+                return False
+        return True
+
 
     def select_unassigned_variable(self, assignment):
         """The function 'Select-Unassigned-Variable' from the pseudocode
