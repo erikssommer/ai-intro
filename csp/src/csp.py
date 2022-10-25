@@ -21,7 +21,7 @@ class CSP:
 
         # Counters
         self.backtrack_count = 0
-        self.failure_counter = 0
+        self.failure_count = 0
 
     def add_variable(self, name: str, domain: list):
         """Add a new variable to the CSP.
@@ -196,7 +196,7 @@ class CSP:
                 if result:
                     return result
         
-        self.failure_counter += 1
+        self.failure_count += 1
         return False
         
     def order_domain_values(self, var, assignment: dict):
