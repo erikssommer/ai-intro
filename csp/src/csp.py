@@ -110,8 +110,8 @@ class CSP:
             # First, get a list of all possible pairs of values
             # between variables i and j
             self.constraints[i][j] = self.get_all_possible_pairs(
-                                        self.domains[i],
-                                        self.domains[j])
+                self.domains[i],
+                self.domains[j])
 
         # Next, filter this list of value pairs through the function
         # 'filter_function', so that only the legal value pairs remain
@@ -181,7 +181,7 @@ class CSP:
         # Check if the assignment is complete
         if self.is_complete(assignment):
             return assignment
-        
+
         var = self.select_unassigned_variable(assignment)
 
         for value in self.order_domain_values(var, assignment):
@@ -190,16 +190,17 @@ class CSP:
             # making sure the value is a list
             current_assignment[var] = [value]
 
-            inferences = self.inference(current_assignment, self.get_all_neighboring_arcs(var))
+            inferences = self.inference(
+                current_assignment, self.get_all_neighboring_arcs(var))
 
             if inferences:
                 result = self.backtrack(current_assignment)
                 if result:
                     return result
-        
+
         self.failure_count += 1
         return False
-        
+
     def order_domain_values(self, var, assignment: dict):
         """
         Returns list of legal values for 'variable' in any order i.e. no heuristics
@@ -211,7 +212,6 @@ class CSP:
             if len(assignment[var]) != 1:
                 return False
         return True
-
 
     def select_unassigned_variable(self, assignment: dict):
         """The function 'Select-Unassigned-Variable' from the pseudocode
