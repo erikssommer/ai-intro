@@ -229,7 +229,7 @@ class CSP:
         is the initial queue of arcs that should be visited.
         """
         while queue:
-            (i, j) = queue.pop(0)
+            (i, j) = queue.pop()
             if self.revise(assignment, i, j):
                 if len(assignment[i]) == 0:
                     return False
@@ -251,7 +251,6 @@ class CSP:
             if not any((x, y) in self.constraints[i][j] for y in assignment[j]):
                 assignment[i].remove(x)
                 revised = True
-
         return revised
 
 
