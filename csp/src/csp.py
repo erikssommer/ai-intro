@@ -187,9 +187,10 @@ class CSP:
         for value in self.order_domain_values(var, assignment):
             # deep copy to create a clean slate
             current_assignment = copy.deepcopy(assignment)
-            current_assignment[var] = value
+            # making sure the value is a list
+            current_assignment[var] = [value]
 
-            inferences = self.inference(assignment, self.get_all_neighboring_arcs(var))
+            inferences = self.inference(current_assignment, self.get_all_neighboring_arcs(var))
 
             if inferences:
                 result = self.backtrack(current_assignment)
