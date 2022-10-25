@@ -221,14 +221,21 @@ class CSP:
             if len(assignment[var]) > 1:
                 return var
 
-    def inference(self, assignment, queue):
+    def inference(self, assignment, queue: list):
         """The function 'AC-3' from the pseudocode in the textbook.
         'assignment' is the current partial assignment, that contains
         the lists of legal values for each undecided variable. 'queue'
         is the initial queue of arcs that should be visited.
         """
-        # TODO: YOUR CODE HERE
-        pass
+        while queue:
+            (i, j) = queue.pop(0)
+            if self.revise(assignment, i, j):
+                if len(assignment[i]) == 0:
+                    return False
+                for (k, _) in self.get_all_neighboring_arcs(i):
+                    if k != i:
+                        queue.append((k, i))
+        return True
 
     def revise(self, assignment, i, j):
         """The function 'Revise' from the pseudocode in the textbook.
