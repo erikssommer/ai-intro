@@ -181,6 +181,28 @@ class CSP:
         if self.is_complete(assignment):
             return assignment
         
+        var = self.select_unassigned_variable(assignment)
+
+        for value in self.order_domain_values(var, assignment):
+            # deep copy to create a clean slate
+            current_assignment = copy.deepcopy(assignment)
+            current_assignment[var] = value
+
+            inferences = self.inference(assignment, self.get_all_neighboring_arcs(var))
+
+            if inferences:
+                result = self.backtrack(current_assignment)
+                if result:
+                    return result
+        
+        self.failure_counter += 1
+        return False
+        
+    def order_domain_values(self, var, assignment):
+        """
+        Returns list of legal values for 'variable' in any order i.e. no heuristics
+        """
+        return assignment[var]
 
     def is_complete(self, assignment):
         for var in assignment:
@@ -195,8 +217,9 @@ class CSP:
         in 'assignment' that have not yet been decided, i.e. whose list
         of legal values has a length greater than one.
         """
-        # TODO: YOUR CODE HERE
-        pass
+        for var in assignment:
+            if len(assignment[var]) > 1:
+                return var
 
     def inference(self, assignment, queue):
         """The function 'AC-3' from the pseudocode in the textbook.
