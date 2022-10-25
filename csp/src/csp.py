@@ -2,6 +2,7 @@
 # Original code by Håkon Måløy
 # Updated by Xavier Sánchez Díaz
 
+from asyncio import constants
 import copy
 from itertools import product as prod
 
@@ -233,8 +234,7 @@ class CSP:
                 if len(assignment[i]) == 0:
                     return False
                 for (k, _) in self.get_all_neighboring_arcs(i):
-                    if k != i:
-                        queue.append((k, i))
+                    queue.append((k, i))
         return True
 
     def revise(self, assignment: dict, i, j):
@@ -248,7 +248,7 @@ class CSP:
         """
         revised = False
         for x in assignment[i]:
-            if not any(self.constraints[i][j](x, y) for y in assignment[j]):
+            if not any((x, y) in self.constraints[i][j] for y in assignment[j]):
                 assignment[i].remove(x)
                 revised = True
 
