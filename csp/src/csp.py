@@ -1,6 +1,7 @@
 # CSP Assignment
 # Original code by Håkon Måløy
 # Updated by Xavier Sánchez Díaz
+# Algorithm implemented by Erik Storås Sommer
 
 from asyncio import constants
 import copy
