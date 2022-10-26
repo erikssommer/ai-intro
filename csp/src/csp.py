@@ -175,39 +175,49 @@ class CSP:
         iterations of the loop.
         """
 
-        # Increment the backtrack counter
+        # increment the backtrack counter
         self.backtrack_count += 1
 
-        # Check if the assignment is complete
+        # check if the assignment is complete
         if self.is_complete(assignment):
             return assignment
 
+        # Selects the first and best unassigned variable
         var = self.select_unassigned_variable(assignment)
 
+        # Loops through the domain of the variable
         for value in self.order_domain_values(var, assignment):
             # deep copy to create a clean slate
             current_assignment = copy.deepcopy(assignment)
             # making sure the value is a list
             current_assignment[var] = [value]
 
+            # Try to find a solution with AC-3 algorithm
             inferences = self.inference(
                 current_assignment, self.get_all_neighboring_arcs(var))
 
             if inferences:
+                # recursively call backtrack with the new assignment
                 result = self.backtrack(current_assignment)
                 if result:
+                    # if result is present, return it -> backtrack success
                     return result
 
+        # if no result is found, backtracking fail -> count it and return false
         self.failure_count += 1
         return False
 
     def order_domain_values(self, var, assignment: dict):
         """
-        Returns list of legal values for 'variable' in any order i.e. no heuristics
+        Returns list of legal values for 'var' in any order
+        No heuristics
         """
         return assignment[var]
 
     def is_complete(self, assignment):
+        """
+        Checks if the assignment is complete
+        """
         for var in assignment:
             if len(assignment[var]) != 1:
                 return False
@@ -231,6 +241,7 @@ class CSP:
         """
         while queue:
             (i, j) = queue.pop()
+            # if the arc is revised, add the neighboring arcs to the queue
             if self.revise(assignment, i, j):
                 if len(assignment[i]) == 0:
                     return False
@@ -249,7 +260,9 @@ class CSP:
         """
         revised = False
         for x in assignment[i]:
+            # if there is no value in j's domain that satisfies the constraint
             if not any((x, y) in self.constraints[i][j] for y in assignment[j]):
+                # remove x from i's domain
                 assignment[i].remove(x)
                 revised = True
         return revised
