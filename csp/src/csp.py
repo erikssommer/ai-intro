@@ -303,7 +303,7 @@ def create_sudoku_csp(filename: str) -> CSP:
         A CSP instance
     """
     csp = CSP()
-    board = list(map(lambda x: x.strip(), open(f'../assets/{filename}', 'r')))
+    board = list(map(lambda x: x.strip(), open(f'../assets/boards/{filename}', 'r')))
 
     for row in range(9):
         for col in range(9):
