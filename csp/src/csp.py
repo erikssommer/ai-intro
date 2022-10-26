@@ -19,7 +19,7 @@ class CSP:
         # the variable pair (i, j)
         self.constraints = {}
 
-        # Counters
+        # Counters for how well the CSP solver performs
         self.backtrack_count = 0
         self.failure_count = 0
 
