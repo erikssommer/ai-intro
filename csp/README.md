@@ -1,5 +1,8 @@
 # Assignment 4: Constraint Satisfaction Problems
 
+## Overview
+Implementation for a general solver for Constraint Satisfaction Problems using back - tracking search and the arc-consistency algorithm AC-3. This program is used to solve Sudoku boards of varying difficulty.
+
 ## How to run:
 
 ### Step 1: Navigate into src folder
