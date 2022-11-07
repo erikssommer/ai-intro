@@ -1,0 +1,149 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Assignment 5: Propositional and First Order Logic in Reasoning}
+\author{Erik Storås Sommer, 535006}
+\date{November 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Models and entailment in propositional logic}
+
+\subsection{Modelling}
+
+\section*{a)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c}
+
+A & 
+B & 
+\neg A \wedge \neg B &
+\neg A \wedge \neg B \Rightarrow \neg B\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & F & F & T\\
+F & T & F & T\\
+T & T & F & T\\
+F & F & T & T\\
+
+\end{array}
+\end{displaymath}
+
+
+\section*{b)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c}
+
+A &
+B & 
+\neg A \wedge \neg B &
+\neg A \vee \neg B \Rightarrow \neg B\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & F & T & T\\
+F & T & T & F\\
+T & T & F & T\\
+F & F & T & T\\
+
+\end{array}
+\end{displaymath}
+
+
+\section*{c)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c}
+
+A & 
+B & 
+\neg A \wedge B & 
+A \vee B & \neg A \wedge B \Rightarrow A \vee B\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & F & T & T\\
+T & F & F & T & T\\
+F & T & T & T & T\\
+F & F & F & F & T\\
+
+\end{array}
+\end{displaymath}
+
+
+\section*{d)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c}
+
+A & 
+B & 
+A \Rightarrow B & 
+A \Leftrightarrow B & 
+(A \Rightarrow B) \Rightarrow (A \Leftrightarrow B)\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & T & T & T\\
+T & F & F & F & T\\
+F & T & T & F & F\\
+F & F & T & F & T\\
+
+\end{array}
+\end{displaymath}
+
+\section*{e)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c|c|c}
+
+A & 
+B & 
+C &
+A \Rightarrow B & 
+(A \Rightarrow B) \Leftrightarrow C &
+A \vee \neg B \vee C &
+((A \Rightarrow B) \Leftrightarrow C) \Rightarrow (A \vee \neg B \vee C)\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & T & T & T & T & T\\
+T & T & F & T & F & T & T\\
+T & F & T & F & F & T & T\\
+T & F & F & F & T & T & T\\
+F & T & T & T & T & T & T\\
+F & T & F & T & F & F & T\\
+F & F & T & T & T & T & T\\
+F & F & F & T & F & T & T\\
+
+\end{array}
+\end{displaymath}
+
+\section*{f)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c}
+
+A & 
+B & 
+\neg A \Rightarrow \neg B & 
+A \wedge \neg B &
+(\neg A \Rightarrow \neg B) \wedge (A \wedge \neg B)\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & T & F & F\\
+T & F & T & T & T\\
+F & T & F & F & F\\
+F & F & T & F & F\\
+
+\end{array}
+\end{displaymath}
+
+
+\section*{g)}
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c}
+
+A & 
+B & 
+\neg A \Rightarrow \neg B & 
+A \wedge \neg B &
+(\neg A \Leftrightarrow \neg B) \wedge (A \wedge \neg B)\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & T & F & F\\
+T & F & F & T & F\\
+F & T & F & F & F\\
+F & F & T & F & F\\
+
+\end{array}
+\end{displaymath}
+
+\end{document}
