@@ -13,7 +13,9 @@
 
 \subsection{Modelling}
 
-\section*{a)}
+Truth table\\
+
+a)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c}
 
@@ -31,7 +33,7 @@ F & F & T & T\\
 \end{displaymath}
 
 
-\section*{b)}
+b)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c}
 
@@ -49,7 +51,7 @@ F & F & T & T\\
 \end{displaymath}
 
 
-\section*{c)}
+c)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -67,7 +69,7 @@ F & F & F & F & T\\
 \end{displaymath}
 
 
-\section*{d)}
+d)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -85,7 +87,7 @@ F & F & T & F & T\\
 \end{array}
 \end{displaymath}
 
-\section*{e)}
+e)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c|c|c}
 
@@ -109,7 +111,7 @@ F & F & F & T & F & T & T\\
 \end{array}
 \end{displaymath}
 
-\section*{f)}
+f)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -128,7 +130,7 @@ F & F & T & F & F\\
 \end{displaymath}
 
 
-\section*{g)}
+g)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -148,57 +150,82 @@ F & F & T & F & F\\
 
 \subsection{Trouble in the lab}
 
-\section*{a)}
+Design a control system using model checking to close tank gates whenever an 8-bit packet arrives:\\
 
-\section*{b)}
+a)\\
 
-\section*{c)}
+b)\\
 
-\section*{d)}
+c)\\
+
+d)\\
 
 \section{Resolution in propositional logic}
 
 \subsection{Conjunctive Normal Form}
 
-\section*{a)}
+Convert each of the following sentences to their Conjunctive Normal Form (CNF)\\
 
-\section*{b)}
-
-\section*{c)}
-
-\section*{d)}
-
-\section*{e)}
-
-\subsection{Inference in propositional logic}
-
-\section*{a)}
+a)\\
 A \vee (B \wedge C \wedge \neg D)\\
 (A \vee B) \wedge (A \vee C) \wedge (A \vee \neg D)\\
 
-\section*{b)}
+b)\\
 \neg (A \Rightarrow \neg B) \wedge \neg (C \Rightarrow \neg D)\\
 \neg (\neg A \vee \neg B) \wedge \neg (\neg C \vee \neg D)\\
-(A \vee B ) \wedge (C \vee D)
+(A \vee B ) \wedge (C \vee D)\\
 
-\section*{c)}
+c)\\
 \neg ((A \Rightarrow B) \wedge (C \Rightarrow D))\\
 \neg ((\neg A \vee B) \wedge (\neg C \vee D))\\
 (\neg (\neg A \vee B) \wedge \neg(\neg C \vee D))\\
-(A \vee \neg B) \wedge (C \vee \neg D)
+(A \vee \neg B) \wedge (C \vee \neg D)\\
 
-\section*{d)}
+d)\\
 (A \wedge B) \vee (C \Rightarrow D)\\
 (A \wedge B) \vee (\neg C \vee D)\\
-NOT \: COMPLETE
+NOT \: COMPLETE\\
 
-\section*{e)}
+e)\\
 A \Leftrightarrow (B \Rightarrow \neg C)\\
 (A \Rightarrow (B \Rightarrow \neg C)) \wedge ((B \Rightarrow \neg C) \Rightarrow A)\\
 (\neg A \vee (B \Rightarrow \neg C)) \wedge (\neg (B \Rightarrow \neg C) \vee A)\\
 (\neg A \vee (\neg B \vee \neg C)) \wedge (\neg (\neg B \vee \neg C) \vee A)\\
 (\neg A \vee (\neg B \vee \neg C)) \wedge ((B \vee C) \vee A)\\
-(\neg A \vee \neg B \vee \neg C) \wedge (B \vee C \vee A)
+(\neg A \vee \neg B \vee \neg C) \wedge (B \vee C \vee A)\\
 
+\subsection{Inference in propositional logic}
+
+\section{Representation in First-Order Logic (FOL)}
+
+\subsection{Predicates}
+Vocabulary:\\
+1. Occupation(p, o) is a predicate where person p has occupation o\\
+2. Customer(p1, p2) is a predicate where person p1 is a customer of person p2 3. Boss(p1, p2) is a predicate where person p1 is a boss of person p2\\
+4. Doctor, Surgeon, Lawyer, Actor are constants denoting an occupation\\
+5. Emily, Joe are constants denoting people\\
+
+
+
+a) Emily is either a surgeon or a lawyer\\
+Occupation(Emily, \neg Surgeon) \wedge Occupation(Emily, \neg Lawyer)\\
+
+b) Joe is an actor, but he also holds another job\\
+Occupation(Joe, Actor) \wedge (Occupation(Joe, Doctor) \vee Occupation(Joe, Surgeon) \vee Occupation(Joe, Lawyer))\\
+
+c) All surgeons are doctors\\
+\forall x \: Occupation(x, Surgeon) \Rightarrow Occupation(x, Doctor)\\
+
+d) Joe does not have a lawyer (i.e. he’s not a customer of any lawyer)\\
+\exists x \: Customer(Joe, \neg Occupation(x, Lawyer))\\
+
+e) Emily has a boss who is a lawyer\\
+\exists x \: Boss(Emily, Occupation(x, Lawyer))\\
+
+f) There exists a lawyer all of whose customers are doctors\\
+\exists x \forall y \: Customer(Occupation(x, Doctor), Occupation(x, Lawyer))\\
+
+g) Every surgeon has a lawyer\\
+\forall x \exists y \: Customer(Occupation(x, Surgeon), Occupation(y, Doctor))\\
 
 \end{document}
