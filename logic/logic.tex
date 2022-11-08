@@ -235,6 +235,18 @@ Arithmetic assertions can be written using FOL. Use the predicates (<,≤,̸=,=)
 
 a) Divisible(x, y): an integer number x is divisible by y if there is some integer z less than x such that x = z × y.\\
 
+b) Even(x): a number is even if and only if it is divisible by 2.\\
+
+c) Odd(x): a number is odd if it is not divisible by 2.\\
+
+d) Odd(x): a number is odd if it is the result of summing 1 to an even number.\\
+
+e) Prime(x): a number is prime if is divisible only by itself.\\
+
+f) There is only one even prime number.\\
+
+g) Every integer number is equal to a product of prime numbers (Hint: you can use Qki=1 pk to express a product of numbers, or use . . . to express a repeating pattern like p1, . . . , pn meaning p1, p2, p3 and on until pn).\\
+
 \section{Resolution in FOL}
 
 Rules: \\
@@ -291,5 +303,15 @@ a) Generate the knowledge base by converting each rule to symbolic form.\\
 10. \forall x \: (Sone(x) \wedge Ballads(x)) \Rightarrow TAE(x)\\
 
 \: \: \: \: - CNF: \neg Sone(x) \vee \neg Ballads(x) \vee TAE(x)\\
+
+b) Using resolution, prove or disprove (by showing the complete process) that if a new user u1 is a fan of GG and identifies as Reveluv, then T AE will be a good recommendation.\\
+
+
+c) Considering the same user u1, prove or disprove that HE will be a good recommendation.\\
+
+
+d) Given what you know, if another user u2 claims to be a Sone, a Reveluv, a Blink, and likes Drama;
+what are the possible artists and genre recommendations the system will provide? \\
+
 
 \end{document}
