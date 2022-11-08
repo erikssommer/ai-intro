@@ -228,4 +228,68 @@ f) There exists a lawyer all of whose customers are doctors\\
 g) Every surgeon has a lawyer\\
 \forall x \exists y \: Customer(Occupation(x, Surgeon), Occupation(y, Doctor))\\
 
+
+\subsection{Functions as predicates}
+
+Arithmetic assertions can be written using FOL. Use the predicates (<,≤,̸=,=), the usual arithmetic operations (+, −, ×, /) as function symbols, biconditionals to create new predicates, and integer number constants to express the following statements in FOL:\\
+
+a) Divisible(x, y): an integer number x is divisible by y if there is some integer z less than x such that x = z × y.\\
+
+\section{Resolution in FOL}
+
+Rules: \\
+• All users who like GG are known as Sone, and therefore all Sone like GG\\
+• All users who like RV are known as Reveluvs, and therefore all Reveluvs like RV\\
+• All users who like BP are known as Blinks, and therefore all Blinks like BP\\
+• All users who identify as Revelusv will always like Ballads\\
+• All users who identify as Blinks will always like Dance\\
+• All users who like both Dance and Ballads will always like CH\\
+• All users who like both Drama and Ballads will always like HE\\
+• For all users who identify as Sone, the following holds:\\
+– If they like Electro, they will always like DJH\\
+– If they like Drama, they will always like SEO\\
+– If they like Ballads, they will always like TAE\\
+
+a) Generate the knowledge base by converting each rule to symbolic form.\\
+
+1. \forall x \: GG(x) \Leftrightarrow Sone(x)\\
+
+\: \: \: \: - CNF: (\neg GG(x) \vee Sone(x)) \wedge (\neg Sone(x) \vee GG(x))\\
+
+2. \forall x \: RV(x) \Leftrightarrow Revelusv(x)\\
+
+\: \: \: \: - CNF: (\neg RV(x) \vee Reveluvs(x)) \wedge (\neg Reveluvs(x) \vee RV(x))\\
+
+3. \forall x \: BP(x) \Leftrightarrow Blinks(x)\\
+
+\: \: \: \: - CNF: (\neg BP(x) \vee Blinks(x)) \wedge ( \neg Blinks(x) \vee BP(x))\\
+
+4. \forall x \: Revelusv(x) \Rightarrow Ballads(x)\\
+
+\: \: \: \: - CNF: \neg Reveluvs(x) \wedge Ballads(x)\\
+
+5. \forall x \: Blinks(x) \Rightarrow Dance(x)\\
+
+\: \: \: \: - CNF: \neg Blinks(x) \vee Dance(x)\\
+
+6. \forall x \: (Dance(x) \wedge Ballads(x)) \Rightarrow CH(x)\\
+
+\: \: \: \: - CNF: \neg Dance(x) \vee \neg Ballads(x) \vee CH(x)\\
+
+7. \forall x \: (Drama(x) \wedge Ballads(x)) \Rightarrow HE(x)\\
+
+\: \: \: \: - CNF: \neg Drama(x) \vee \neg Ballads(x) \vee HE(x)\\
+
+8. \forall x \: (Sone(x) \wedge Electro(x)) \Rightarrow DJH(x)\\
+
+\: \: \: \: - CNF: \neg Sone(x) \vee \neg Electro(x) \vee DJH(x)\\
+
+9. \forall x \: (Sone(x) \wedge Drama(x)) \Rightarrow SEO(x)\\
+
+\: \: \: \: - CNF: \neg Sone(x) \vee \neg Drama(x) \vee SEO(x)\\
+
+10. \forall x \: (Sone(x) \wedge Ballads(x)) \Rightarrow TAE(x)\\
+
+\: \: \: \: - CNF: \neg Sone(x) \vee \neg Ballads(x) \vee TAE(x)\\
+
 \end{document}
