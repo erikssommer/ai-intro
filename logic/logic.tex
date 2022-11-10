@@ -32,6 +32,7 @@ F & F & T & T\\
 \end{array}
 \end{displaymath}
 
+It check's out\\
 
 b)\\
 \begin{displaymath}
@@ -49,6 +50,8 @@ F & F & T & T\\
 
 \end{array}
 \end{displaymath}
+
+It does not check out\\
 
 
 c)\\
@@ -68,6 +71,8 @@ F & F & F & F & T\\
 \end{array}
 \end{displaymath}
 
+It check's out\\
+
 
 d)\\
 \begin{displaymath}
@@ -86,6 +91,8 @@ F & F & T & F & T\\
 
 \end{array}
 \end{displaymath}
+
+It does not check out\\
 
 e)\\
 \begin{displaymath}
@@ -111,6 +118,8 @@ F & F & F & T & F & T & T\\
 \end{array}
 \end{displaymath}
 
+It check's out\\
+
 f)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
@@ -130,6 +139,9 @@ F & F & T & F & F\\
 \end{displaymath}
 
 
+It check's out since at least one is true\\
+
+
 g)\\
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
@@ -145,20 +157,34 @@ T & F & F & T & F\\
 F & T & F & F & F\\
 F & F & T & F & F\\
 
+
 \end{array}
 \end{displaymath}
 
+
+It is not specifiable since at least one has to be true\\
+
+
 \subsection{Trouble in the lab}
+
 
 Design a control system using model checking to close tank gates whenever an 8-bit packet arrives:\\
 
 a)\\
+Making a vocabulary system so we can use the sentences in logic:\\
+$S_1$: The tank is unoccupied.\\
+$S_2$: The toxic levels are low\\
+$S_3$: The electric charge is low\\
+
+\noindent We know for sensors $S_2$ and $S_3$, that if they are not true, their levels are set to high. If the tank is not unoccupied its occupied.\\
 
 b)\\
+$C_1$:(\neg S_1 \wedge S_2 \wedge S_3)\\
+$C_2$:(S_1 \wedge \neg S_2)\\
+$C_3$:(\neg S_3)\\
 
 c)\\
-
-d)\\
+The logical statement for locking the gate will then be: (C_1 \vee C_2 \vee C_3)\\
 
 \section{Resolution in propositional logic}
 
@@ -173,32 +199,74 @@ A \vee (B \wedge C \wedge \neg D)\\
 b)\\
 \neg (A \Rightarrow \neg B) \wedge \neg (C \Rightarrow \neg D)\\
 \neg (\neg A \vee \neg B) \wedge \neg (\neg C \vee \neg D)\\
-(A \vee B ) \wedge (C \vee D)\\
+(A \wedge B ) \wedge (C \wedge D)\\
+A \wedge B \wedge C \wedge D\\
 
 c)\\
 \neg ((A \Rightarrow B) \wedge (C \Rightarrow D))\\
 \neg ((\neg A \vee B) \wedge (\neg C \vee D))\\
-(\neg (\neg A \vee B) \wedge \neg(\neg C \vee D))\\
-(A \vee \neg B) \wedge (C \vee \neg D)\\
+(\neg (\neg A \vee B) \vee \neg(\neg C \vee D))\\
+(A \wedge \neg B) \vee (C \wedge \neg D)\\
+(A \vee C) \wedge (A \vee \neg D) \wedge (\neg B \vee C) \wedge (\neg B \vee \neg D)\\
 
 d)\\
 (A \wedge B) \vee (C \Rightarrow D)\\
 (A \wedge B) \vee (\neg C \vee D)\\
-NOT \: COMPLETE\\
+(A \vee \neg C \vee D) \wedge (B \vee \neg C \vee D)\\
 
 e)\\
 A \Leftrightarrow (B \Rightarrow \neg C)\\
 (A \Rightarrow (B \Rightarrow \neg C)) \wedge ((B \Rightarrow \neg C) \Rightarrow A)\\
 (\neg A \vee (B \Rightarrow \neg C)) \wedge (\neg (B \Rightarrow \neg C) \vee A)\\
 (\neg A \vee (\neg B \vee \neg C)) \wedge (\neg (\neg B \vee \neg C) \vee A)\\
-(\neg A \vee (\neg B \vee \neg C)) \wedge ((B \vee C) \vee A)\\
-(\neg A \vee \neg B \vee \neg C) \wedge (B \vee C \vee A)\\
+(\neg A \vee (\neg B \vee \neg C)) \wedge ((B \wedge C) \vee A)\\
+(\neg A \vee \neg B \vee \neg C) \wedge (B \vee A) \wedge (C \vee A)\\
 
 \subsection{Inference in propositional logic}
+
+Shortening down the sentences to variables:\\
+
+\noindent S = weather is sunny\\
+Warm = weather is warm\\
+R = weather is raining\\
+E = I will enjoy\\
+B = I will pick berries\\
+Wet = I will get wet\\
+
+\noindent Premises:\\
+
+S \wedge Warm \Rightarrow E\\
+Warm \wedge  R \Rightarrow B\\
+R \Rightarrow \neg B\\
+R \Rightarrow Wet\\
+
+\noindent Warm: True, R: True, S: True\\
+
+
+\noindent Q1: I won’t pick berries:\\
+We know that R is true, and we have that\\
+R \Rightarrow \neg B\\
+
+\noindent We can prove this statement\\
+
+\noindent Q2 I will Enjoy:\\
+Both S and W is true\\
+We know that: \\
+S \wedge Warm \Rightarrow E\\
+
+\noindent We can therefore prove this statement\\
+
+\noindent Q3 I will get wet\\
+R is true\\
+R \Rightarrow Wet\\
+
+\noindent We can therefore prove this statement
+
 
 \section{Representation in First-Order Logic (FOL)}
 
 \subsection{Predicates}
+
 Vocabulary:\\
 1. Occupation(p, o) is a predicate where person p has occupation o\\
 2. Customer(p1, p2) is a predicate where person p1 is a customer of person p2 3. Boss(p1, p2) is a predicate where person p1 is a boss of person p2\\
@@ -208,22 +276,24 @@ Vocabulary:\\
 
 
 a) Emily is either a surgeon or a lawyer\\
-Occupation(Emily, \neg Surgeon) \wedge Occupation(Emily, \neg Lawyer)\\
+Occupation(Emily, Surgeon) \vee Occupation(Emily, Lawyer)\\
 
 b) Joe is an actor, but he also holds another job\\
 Occupation(Joe, Actor) \wedge (Occupation(Joe, Doctor) \vee Occupation(Joe, Surgeon) \vee Occupation(Joe, Lawyer))\\
 
 c) All surgeons are doctors\\
-\forall x \: Occupation(x, Surgeon) \Rightarrow Occupation(x, Doctor)\\
+\forall x \: Occupation(x, Surgeon) \Rightarrow \: Occupation(x, Doctor)\\
 
 d) Joe does not have a lawyer (i.e. he’s not a customer of any lawyer)\\
-\exists x \: Customer(Joe, \neg Occupation(x, Lawyer))\\
+\forall x \: Customer(Joe, x) \Rightarrow \neg Occupation(x, Lawyer)\\
 
 e) Emily has a boss who is a lawyer\\
 \exists x \: Boss(Emily, Occupation(x, Lawyer))\\
+or\\
+\exists x \: Boss(Emily, x) \wedge Occupation(x, Lawyer)\\
 
 f) There exists a lawyer all of whose customers are doctors\\
-\exists x \forall y \: Customer(Occupation(x, Doctor), Occupation(x, Lawyer))\\
+\exists x \forall y \: Customer(Occupation(x, Doctor), Occupation(y, Lawyer))\\
 
 g) Every surgeon has a lawyer\\
 \forall x \exists y \: Customer(Occupation(x, Surgeon), Occupation(y, Doctor))\\
@@ -231,20 +301,25 @@ g) Every surgeon has a lawyer\\
 
 \subsection{Functions as predicates}
 
-Arithmetic assertions can be written using FOL. Use the predicates (<,≤,̸=,=), the usual arithmetic operations (+, −, ×, /) as function symbols, biconditionals to create new predicates, and integer number constants to express the following statements in FOL:\\
+Arithmetic assertions can be written using FOL. Use the predicates (<,≤,̸=,=), the usual arithmetic operations (+, −, ×, /) as function symbols, bi-conditionals to create new predicates, and integer number constants to express the following statements in FOL:\\
 
 a) Divisible(x, y): an integer number x is divisible by y if there is some integer z less than x such that x = z × y.\\
+Divisible(x,y): \exists z (x = z \times y \wedge z < x)\\
 
 b) Even(x): a number is even if and only if it is divisible by 2.\\
+Even(x): \exists y (x = 2 \times y)\\
 
 c) Odd(x): a number is odd if it is not divisible by 2.\\
+Odd(x): - \exists y (x = 2 \times y)\\
 
 d) Odd(x): a number is odd if it is the result of summing 1 to an even number.\\
+Odd(x): \exists y ( x = 2 \times y + 1)\\
 
 e) Prime(x): a number is prime if is divisible only by itself.\\
+Prime(x): \forall y - \exists z (x = z \times y \wedge x \neq y)\\
 
 f) There is only one even prime number.\\
-
+EvenPrime(x): \exists y 
 g) Every integer number is equal to a product of prime numbers (Hint: you can use Qki=1 pk to express a product of numbers, or use . . . to express a repeating pattern like p1, . . . , pn meaning p1, p2, p3 and on until pn).\\
 
 \section{Resolution in FOL}
