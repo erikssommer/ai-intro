@@ -15,7 +15,9 @@
 
 Truth table\\
 
-a)\\
+a) \: \neg A \wedge \neg B \models \neg B\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c}
 
@@ -32,9 +34,11 @@ F & F & T & T\\
 \end{array}
 \end{displaymath}
 
-It check's out\\
+It checks out\\
 
-b)\\
+b) \: \neg A \vee \neg B \models \neg B\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c}
 
@@ -54,7 +58,9 @@ F & F & T & T\\
 It does not check out\\
 
 
-c)\\
+c) \: \neg A \wedge B \models A \vee B\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -71,10 +77,12 @@ F & F & F & F & T\\
 \end{array}
 \end{displaymath}
 
-It check's out\\
+It checks out\\
 
 
-d)\\
+d) \: A \Rightarrow B \models A \Leftrightarrow B\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -94,7 +102,9 @@ F & F & T & F & T\\
 
 It does not check out\\
 
-e)\\
+e) \: (A \Rightarrow B) \Leftrightarrow C \models A \vee  \neg B \vee C\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c|c|c}
 
@@ -118,9 +128,11 @@ F & F & F & T & F & T & T\\
 \end{array}
 \end{displaymath}
 
-It check's out\\
+It checks out\\
 
-f)\\
+f) \: (\neg A \Rightarrow \neg B) \wedge (A \wedge \neg B) is specifiable\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -139,10 +151,12 @@ F & F & T & F & F\\
 \end{displaymath}
 
 
-It check's out since at least one is true\\
+It checks out since at least one is true\\
 
 
-g)\\
+g) \: (\neg A \Leftrightarrow \neg B) \wedge (A \wedge \neg B) is specifiable\\
+
+
 \begin{displaymath}
 \begin{array}{|c|c|c|c|c|c}
 
@@ -176,15 +190,47 @@ $S_1$: The tank is unoccupied.\\
 $S_2$: The toxic levels are low\\
 $S_3$: The electric charge is low\\
 
-\noindent We know for sensors $S_2$ and $S_3$, that if they are not true, their levels are set to high. If the tank is not unoccupied its occupied.\\
+\noindent If sensors $S_2$ and $S_3$ are not true, their levels are set to high. If the tank is not unoccupied it is occupied.\\
 
 b)\\
-$C_1$:(\neg S_1 \wedge S_2 \wedge S_3)\\
-$C_2$:(S_1 \wedge \neg S_2)\\
-$C_3$:(\neg S_3)\\
+$C_1$:(\neg $S_1$ \wedge $S_2$ \wedge $S_3$)\\
+$C_2$:($S_1$ \wedge \neg $S_2$)\\
+$C_3$:(\neg $S_3$)\\
 
 c)\\
-The logical statement for locking the gate will then be: (C_1 \vee C_2 \vee C_3)\\
+The logical statement for locking the gate will then be: ($C_1$ \vee $C_2$ \vee $C_3$)\\
+
+\begin{displaymath}
+\begin{array}{|c|c|c|c|c|c|c|c|}
+
+S_1 & 
+S_2 & 
+S_2 &
+(\neg S_1 \wedge S_2 \wedge S_3) & 
+(S_1 \wedge \neg S_2) &
+(\neg S_3) &
+(\neg S_1 \wedge S_2 \wedge S_3) \vee (S_1 \wedge \neg S_2) \vee (\neg S_3)
+\\ % Use & to separate the columns
+\hline  % Put a horizontal line between the table header and the rest.
+T & T & T & F & F & F & F\\
+T & T & F & F & F & T & T\\
+T & F & T & F & T & F & T\\
+T & F & F & F & T & T & T\\
+F & T & T & T & F & F & T\\
+F & T & F & F & F & T & T\\
+F & F & T & F & F & F & F\\
+F & F & F & F & F & T & T\\
+
+
+\end{array}
+\end{displaymath}
+
+d)\\
+
+\noindent Incoming package nr.: 011 00111:\\
+The three first numbers matter, since the numbers behind represent the id of the tank.
+That gives the results: false, true, true giving that $S_1$ is false and the rest are true. This means the tank is occupied, the toxicity is low, and the electric charge is low. Since the sentence of $C_1$ is true in this scenario, the tank will be closed. An example of a package where the tank will be open is: 000 10100.
+
 
 \section{Resolution in propositional logic}
 
@@ -224,43 +270,19 @@ A \Leftrightarrow (B \Rightarrow \neg C)\\
 
 \subsection{Inference in propositional logic}
 
-Shortening down the sentences to variables:\\
-
-\noindent S = weather is sunny\\
-Warm = weather is warm\\
-R = weather is raining\\
-E = I will enjoy\\
-B = I will pick berries\\
-Wet = I will get wet\\
-
-\noindent Premises:\\
-
-S \wedge Warm \Rightarrow E\\
-Warm \wedge  R \Rightarrow B\\
-R \Rightarrow \neg B\\
-R \Rightarrow Wet\\
-
-\noindent Warm: True, R: True, S: True\\
+\noindent S = Sunny\\
+W = Warm\\
+R = Raining\\
 
 
-\noindent Q1: I won’t pick berries:\\
-We know that R is true, and we have that\\
-R \Rightarrow \neg B\\
+\noindent $Q1$ I won’t pick up Berries\\
+$Q2$ I will Enjoy\\
+$Q3$ I will get wet\\
 
-\noindent We can prove this statement\\
 
-\noindent Q2 I will Enjoy:\\
-Both S and W is true\\
-We know that: \\
-S \wedge Warm \Rightarrow E\\
-
-\noindent We can therefore prove this statement\\
-
-\noindent Q3 I will get wet\\
-R is true\\
-R \Rightarrow Wet\\
-
-\noindent We can therefore prove this statement
+\noindent Given that it is raining, we do not pick berries: $Q1 = W \wedge \neg R$\\
+Given that it is sunny and warm, we are enjoying: $Q2 = S \wedge W$\\
+Given that it is raining we will get wet: $Q3$ = R\\
 
 
 \section{Representation in First-Order Logic (FOL)}
@@ -319,7 +341,8 @@ e) Prime(x): a number is prime if is divisible only by itself.\\
 Prime(x): \forall y - \exists z (x = z \times y \wedge x \neq y)\\
 
 f) There is only one even prime number.\\
-EvenPrime(x): \exists y 
+EvenPrime(x): \forall x - \exists y \exists z(z=\frac{x}{y} \wedge y \neq x \wedge x=2 \times z) \\
+
 g) Every integer number is equal to a product of prime numbers (Hint: you can use Qki=1 pk to express a product of numbers, or use . . . to express a repeating pattern like p1, . . . , pn meaning p1, p2, p3 and on until pn).\\
 
 \section{Resolution in FOL}
@@ -379,14 +402,24 @@ a) Generate the knowledge base by converting each rule to symbolic form.\\
 
 \: \: \: \: - CNF: \neg Sone(x) \vee \neg Ballads(x) \vee TAE(x)\\
 
-b) Using resolution, prove or disprove (by showing the complete process) that if a new user u1 is a fan of GG and identifies as Reveluv, then T AE will be a good recommendation.\\
+b) Using resolution, prove or disprove (by showing the complete process) that if a new user u1 is a fan of GG and identifies as Reveluv, then TAE will be a good recommendation.\\
 
+GG($u_1$) \Leftrightarrow $u_1$ \in Revelusv \Rightarrow Ballads($u_1$) \Rightarrow TAE($u_1$)\\
+
+It checks out\\
 
 c) Considering the same user u1, prove or disprove that HE will be a good recommendation.\\
 
+Given (x \in Drama(x) \wedge Ballads($u_1$) \Rightarrow HE(x)\\
+And\\
+GG($u_1$) \Leftrightarrow $u_1$ \in Revelusv \Rightarrow Ballads($u_1$) \wedge \neg Drama($u_1$)\\
+
+
+\neg LikeHE(x)\\
 
 d) Given what you know, if another user u2 claims to be a Sone, a Reveluv, a Blink, and likes Drama;
 what are the possible artists and genre recommendations the system will provide? \\
 
+CH, HE, SEO and TAE
 
 \end{document}
