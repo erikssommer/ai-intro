@@ -6,8 +6,6 @@ This is a repository for the course "Introduction to Artificial Intelligence" at
 
 Each folder is itsown project covering a different topic in AI.
 
-Each project folder in the root directory contains a README.md file with a description of the project and how to run.
-
 - astar - Applying the A* search
 
 - multiagent - Minimax and alpha-beta pruning
@@ -16,3 +14,4 @@ Each project folder in the root directory contains a README.md file with a descr
 
 - logic -  Propositional and First Order Logic in Reasoning (Theory)
 
+Each project folder in the root directory contains a README.md file with a description of the project and how to run.
