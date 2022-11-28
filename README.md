@@ -14,4 +14,6 @@ Each folder is itsown project covering a different topic in AI.
 
 - logic -  Propositional and First Order Logic in Reasoning (Theory)
 
+- collection - shorter forms of fundemental algorithms
+
 Each project folder in the root directory contains a README.md file with a description of the project and how to run.
